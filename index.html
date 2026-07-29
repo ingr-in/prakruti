@@ -3,47 +3,119 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>प्रकृति का सौंदर्य - मुख्य पृष्ठ</title>
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="maya/scss/style.css">
-  <script src="maya/js/script.js" defer></script>
+  <title>एडमिन पैनल - प्रकृति का सौंदर्य</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="test/assets/css/style.css">
+  <style>
+    .admin-container {
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 20px;
+      background: #f9f9f9;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .login-form {
+      max-width: 400px;
+      margin: 50px auto;
+    }
+    .content-editor {
+      margin-bottom: 30px;
+      padding: 20px;
+      background: white;
+      border-radius: 5px;
+    }
+  </style>
 </head>
 <body>
   <header>
-    <h1>🌿 प्रकृति का सौंदर्य 🌸</h1>
-    <p>🌍 नेचर हमें शांति, ऊर्जा और प्रेरणा देती है। 🌞</p>
+    <h1>🔧 एडमिन पैनल 🌿</h1>
+    <p>वेबसाइट कंटेंट प्रबंधन</p>
   </header>
   
   <nav>
-    <a href="index.html" class="active">🏡 मुख्य पृष्ठ</a>
-    <a href="about.html">🌲 हमारे बारे में</a>
-    <a href="gallery.html">📷 गैलरी</a>
-    <a href="contact.html">📩 संपर्क करें</a>
-    <a href="admin/" class="admin-link">🔧 एडमिन</a>
+    <a href="../index.html">🏡 वेबसाइट देखें</a>
     <button onclick="toggleDarkMode()">🌙 डार्क मोड</button>
+    <button onclick="logout()" style="float:right;">🚪 लॉग आउट</button>
   </nav>
 
   <main>
-    <section>
-      <h2>✨ प्रकृति क्या है? ✨</h2>
-      <div id="main-content">
-        <p>प्रकृति वह शक्ति है जो जीवन को जन्म देती है। 🌱 इसमें धरती, जल, आकाश, अग्नि और वायु शामिल हैं। इसका संतुलन बनाए रखना हम सभी की ज़िम्मेदारी है। 🌍</p>
-        <img src="https://source.unsplash.com/800x400/?nature,beauty" alt="प्रकृति की सुंदरता">
-      </div>
-    </section>
+    <div id="login-section" class="admin-container">
+      <h2>🔐 एडमिन लॉगिन</h2>
+      <form id="login-form" class="login-form">
+        <div class="form-group">
+          <label for="username">यूजरनेम:</label>
+          <input type="text" id="username" required>
+        </div>
+        <div class="form-group">
+          <label for="password">पासवर्ड:</label>
+          <input type="password" id="password" required>
+        </div>
+        <button type="submit">🚪 लॉग इन</button>
+      </form>
+    </div>
 
-    <section>
-      <h2>🌟 लोगों की राय 🌟</h2>
-      <div class="testimonials">
-        "मैं जब भी तनाव में होता हूँ, जंगल की ओर चला जाता हूँ। 🌳 प्रकृति मेरी सबसे अच्छी दोस्त है।" – रजत शर्मा
+    <div id="admin-content" class="admin-container" style="display:none;">
+      <h2>✏️ कंटेंट मैनेजमेंट</h2>
+      
+      <div class="content-editor">
+        <h3>🏠 मुख्य पृष्ठ कंटेंट</h3>
+        <textarea id="home-content" rows="5">प्रकृति वह शक्ति है जो जीवन को जन्म देती है...</textarea>
+        <button onclick="updateContent('home-content')">💾 सेव करें</button>
       </div>
-    </section>
+      
+      <div class="content-editor">
+        <h3>🌲 हमारे बारे में</h3>
+        <textarea id="about-content" rows="5">हम प्रकृति प्रेमियों का एक समूह हैं...</textarea>
+        <button onclick="updateContent('about-content')">💾 सेव करें</button>
+      </div>
+      
+      <div class="stats">
+        <h3>📊 वेबसाइट स्टेटस</h3>
+        <p>अंतिम अपडेट: <span id="last-updated"></span></p>
+      </div>
+    </div>
   </main>
 
   <footer>
-    <p>© <span id="year"></span> प्रकृति प्रेमी | Developed with ❤️</p>
-    <p>🌸 प्रकृति से प्रेम करें, उसकी रक्षा करें 🌍</p>
+    <p>© <span id="year"></span> प्रकृति प्रेमी | Admin Panel</p>
   </footer>
 
+  <script src="test/assets/js/script.js"></script>
+  <script>
+    // Simple admin functionality (for demo)
+    document.getElementById('login-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      
+      // Demo credentials (in real app, use proper authentication)
+      if(username === 'admin' && password === 'prakriti123') {
+        document.getElementById('login-section').style.display = 'none';
+        document.getElementById('admin-content').style.display = 'block';
+        document.getElementById('last-updated').textContent = new Date().toLocaleString();
+        localStorage.setItem('loggedIn', 'true');
+      } else {
+        alert('गलत यूजरनेम या पासवर्ड!');
+      }
+    });
+
+    function updateContent(textareaId) {
+      alert('कंटेंट अपडेट हो गया! (डेमो में वास्तव में सेव नहीं होगा)');
+      document.getElementById('last-updated').textContent = new Date().toLocaleString();
+    }
+
+    function logout() {
+      localStorage.removeItem('loggedIn');
+      window.location.reload();
+    }
+
+    // Check if already logged in
+    if(localStorage.getItem('loggedIn') === 'true') {
+      document.getElementById('login-section').style.display = 'none';
+      document.getElementById('admin-content').style.display = 'block';
+      document.getElementById('last-updated').textContent = new Date().toLocaleString();
+    }
+  </script>
 </body>
 </html>
