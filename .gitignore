@@ -1,6 +1,2 @@
-*.js
-.*
-/private
-/root
-!/www
-!/public
+/includes/config.php
+/assets/images/uploads/
