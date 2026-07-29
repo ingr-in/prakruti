@@ -1,0 +1,6 @@
+*.js
+.*
+/private
+/root
+!/www
+!/public
